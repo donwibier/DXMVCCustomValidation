@@ -1,0 +1,89 @@
+﻿@model DXCustomValidation.Models.Person
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Person</legend>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.Name)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Name)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ShippingAddress)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ShippingAddress)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ShippingCity)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ShippingCity)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ShippingState)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ShippingState)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ShippingCountry)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.ShippingCountry)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BillingAddress)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BillingAddress)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BillingCity)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BillingCity)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BillingState)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BillingState)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BillingCountry)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BillingCountry)
+    </div>
+
+    <div class="display-label">
+         @Html.DisplayNameFor(model => model.BillingSameAsShipping)
+    </div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BillingSameAsShipping)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

@@ -1,0 +1,72 @@
+﻿@model DXCustomValidation.Models.Person
+
+@{
+    ViewBag.Title = "Create";
+    Action<MVCxFormLayoutItem> TextBoxSettingsMethod = (item) =>
+    {
+        item.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
+        var tbSettings = (TextBoxSettings)item.NestedExtensionSettings;
+        tbSettings.Properties.Password = tbSettings.Name.Contains("Password");
+        tbSettings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        tbSettings.Properties.ValidationSettings.ErrorFrameStyle.Border.BorderColor = System.Drawing.Color.Red;
+        tbSettings.ShowModelErrors = true;
+    };
+
+    Action<MVCxFormLayoutItem> CheckboxSettingsMethod = (item) =>
+    {
+        item.NestedExtensionType = FormLayoutNestedExtensionItemType.CheckBox;
+        var tbSettings = (CheckBoxSettings)item.NestedExtensionSettings;
+        tbSettings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        tbSettings.Properties.ValidationSettings.ErrorFrameStyle.Border.BorderColor = System.Drawing.Color.Red;
+        tbSettings.ShowModelErrors = true;
+    };
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.DevExpress().FormLayout(settings =>
+    {
+        settings.Name = "FormLayout";
+
+        var groupItem = settings.Items.AddGroupItem(groupSettings =>
+        {
+            groupSettings.Caption = "Group Caption";
+            groupSettings.ShowCaption = DefaultBoolean.True;
+            groupSettings.GroupBoxDecoration = GroupBoxDecoration.Default;
+        });
+
+        groupItem.SettingsItems.ShowCaption = DefaultBoolean.True;
+        groupItem.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Left;
+
+        groupItem.Items.Add(m => m.Name, TextBoxSettingsMethod);
+
+        groupItem.Items.Add(m => m.ShippingAddress, TextBoxSettingsMethod);
+        groupItem.Items.Add(m => m.ShippingCity, TextBoxSettingsMethod);
+        groupItem.Items.Add(m => m.ShippingState, TextBoxSettingsMethod);
+        groupItem.Items.Add(m => m.ShippingCountry, TextBoxSettingsMethod);
+
+        groupItem.Items.Add(m => m.BillingSameAsShipping, CheckboxSettingsMethod);
+
+        groupItem.Items.Add(m => m.BillingAddress, TextBoxSettingsMethod);
+        groupItem.Items.Add(m => m.BillingCity, TextBoxSettingsMethod);
+        groupItem.Items.Add(m => m.BillingState, TextBoxSettingsMethod);
+        groupItem.Items.Add(m => m.BillingCountry, TextBoxSettingsMethod);
+
+
+
+    }).GetHtml()
+    <p>
+        <input type="submit" value="Create" />
+    </p>
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
