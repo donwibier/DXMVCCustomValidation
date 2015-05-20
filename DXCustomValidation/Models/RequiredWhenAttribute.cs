@@ -8,7 +8,6 @@ using System.Web.Mvc;
 
 namespace DXCustomValidation.Models
 {
-	 [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
 	 public class RequiredWhenAttribute : ValidationAttribute, IClientValidatable
 	 {
 		  public string DependingOnProperty { get; set; }
@@ -46,7 +45,6 @@ namespace DXCustomValidation.Models
 					 ErrorMessage = FormatErrorMessage(metadata.GetDisplayName()),
 					 ValidationType = "requiredwhen",
 				};
-
 				string propName = metadata.PropertyName + "_";
 				string depProp = (context as ViewContext).ViewData.TemplateInfo.GetFullHtmlFieldId(DependingOnProperty);
 				if (depProp.StartsWith(propName))
@@ -56,9 +54,6 @@ namespace DXCustomValidation.Models
 				rule.ValidationParameters.Add("targetvalue", TargetValue);
 
 				yield return rule;
-
-
-
 		  }
 	 }
 }

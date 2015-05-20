@@ -1,7 +1,7 @@
 ﻿@model DXCustomValidation.Models.Person
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Shipping info";
     Action<MVCxFormLayoutItem> TextBoxSettingsMethod = (item) =>
     {
         item.NestedExtensionType = FormLayoutNestedExtensionItemType.TextBox;
@@ -20,51 +20,80 @@
         tbSettings.Properties.ValidationSettings.ErrorFrameStyle.Border.BorderColor = System.Drawing.Color.Red;
         tbSettings.ShowModelErrors = true;
     };
+    Action<MVCxFormLayoutItem> MemoSettingsMethod = (item) =>
+    {
+        item.NestedExtensionType = FormLayoutNestedExtensionItemType.Memo;
+        var tbSettings = (MemoSettings)item.NestedExtensionSettings;
+        tbSettings.Width = Unit.Percentage(100);
+        tbSettings.Properties.ValidationSettings.ErrorDisplayMode = ErrorDisplayMode.None;
+        tbSettings.Properties.ValidationSettings.ErrorFrameStyle.Border.BorderColor = System.Drawing.Color.Red;
+        tbSettings.ShowModelErrors = true;
+    };
 }
-
-<h2>Edit</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-    @Html.DevExpress().FormLayout(settings =>
+
+    @Html.DevExpress().RoundPanel(settings =>
+{
+    settings.Name = "rpCheckOut";
+    settings.HeaderText = "Checkout your order";
+    settings.ShowHeader = true;
+    settings.SetContent(() =>
     {
-        settings.Name = "FormLayout";
-
-        var groupItem = settings.Items.AddGroupItem(groupSettings =>
+        Html.DevExpress().FormLayout(frmSettings =>
         {
-            groupSettings.Caption = "Group Caption";
-            groupSettings.ShowCaption = DefaultBoolean.True;
-            groupSettings.GroupBoxDecoration = GroupBoxDecoration.Default;
-        });
+            frmSettings.Name = "FrmAddress";
 
-        groupItem.SettingsItems.ShowCaption = DefaultBoolean.True;
-        groupItem.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Left;
+            var personalItem = frmSettings.Items.AddGroupItem(personalSettings =>
+            {
+                personalSettings.Caption = "Personal information";
+                personalSettings.ShowCaption = DefaultBoolean.True;
+                personalSettings.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+                personalSettings.ColCount = 3;
+            });
+            personalItem.SettingsItems.ShowCaption = DefaultBoolean.True;
+            personalItem.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Top;
 
-        groupItem.Items.Add(m => m.Name, TextBoxSettingsMethod);
+            personalItem.Items.Add(m => m.FirstName, TextBoxSettingsMethod);
+            personalItem.Items.Add(m => m.MiddleName, TextBoxSettingsMethod);
+            personalItem.Items.Add(m => m.LastName, TextBoxSettingsMethod);
 
-        groupItem.Items.Add(m => m.ShippingAddress, TextBoxSettingsMethod);
-        groupItem.Items.Add(m => m.ShippingCity, TextBoxSettingsMethod);
-        groupItem.Items.Add(m => m.ShippingState, TextBoxSettingsMethod);
-        groupItem.Items.Add(m => m.ShippingCountry, TextBoxSettingsMethod);
+            var shippingItem = frmSettings.Items.AddGroupItem(shippingSettings =>
+            {
+                shippingSettings.Caption = "Shipping address";
+                shippingSettings.ShowCaption = DefaultBoolean.True;
+                shippingSettings.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+            });
+            shippingItem.SettingsItems.ShowCaption = DefaultBoolean.True;
+            shippingItem.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Top;
+            shippingItem.Items.Add(m => m.ShippingAddress, MemoSettingsMethod);            
 
-        groupItem.Items.Add(m => m.BillingSameAsShipping, CheckboxSettingsMethod);
+            frmSettings.Items.Add(m => m.BillingSameAsShipping);
 
-        groupItem.Items.Add(m => m.BillingAddress, TextBoxSettingsMethod);
-        groupItem.Items.Add(m => m.BillingCity, TextBoxSettingsMethod);
-        groupItem.Items.Add(m => m.BillingState, TextBoxSettingsMethod);
-        groupItem.Items.Add(m => m.BillingCountry, TextBoxSettingsMethod);
+            var billingItem = frmSettings.Items.AddGroupItem(billingSettings =>
+            {
+                billingSettings.Caption = "Billing address";
+                billingSettings.ShowCaption = DefaultBoolean.True;
+                billingSettings.GroupBoxDecoration = GroupBoxDecoration.HeadingLine;
+            });
+            billingItem.SettingsItems.ShowCaption = DefaultBoolean.True;
+            billingItem.SettingsItemCaptions.Location = LayoutItemCaptionLocation.Top;
+            billingItem.Items.Add(m => m.BillingAddress, MemoSettingsMethod);
+            
+        }).Render();
 
 
-
-    }).GetHtml()
+    });
+}).GetHtml()
     <p>
-        <input type="submit" value="Create" />
+        <input type="submit" value="Proceed with checkout" />
     </p>
+
+
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-

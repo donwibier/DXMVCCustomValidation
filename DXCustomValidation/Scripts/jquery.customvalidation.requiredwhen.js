@@ -1,13 +1,13 @@
 ﻿(function ($) {
+	 "use strict";
 	 $.validator.addMethod("requiredwhen",
 				function (value, element, parameters) {
-					 "use strict";
-
 					 var depCtrl = parameters["dependingonproperty"];
 					 var targetVal = parameters["targetvalue"];
 					 if ((typeof targetVal === "undefined") || (targetVal === null)) {
 					 	 targetVal = "";
 					 }
+					 //...
 					 //check if we're dealing with DX controls :-)
 					 var actualVal = null;
 					 if ((typeof ASPxClientControl !== "undefined") && (ASPxClientControl.GetControlCollection().Get(depCtrl) !== "undefined")) {

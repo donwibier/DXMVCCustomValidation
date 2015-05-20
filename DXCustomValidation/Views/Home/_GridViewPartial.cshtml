@@ -22,19 +22,15 @@
         settings.Settings.ShowFilterRow = true;
         settings.SettingsBehavior.AllowSelectByRowClick = true;
 
-        settings.Columns.Add("Name");
+        settings.Columns.Add("FirstName");
+        settings.Columns.Add("MiddleName");
+        settings.Columns.Add("LastName");
 
         settings.Columns.Add("ShippingAddress");
-        settings.Columns.Add("ShippingCity");
-        settings.Columns.Add("ShippingState");
-        settings.Columns.Add("ShippingCountry");
 
         settings.Columns.Add("BillingSameAsShipping", MVCxGridViewColumnType.CheckBox);
 
         settings.Columns.Add("BillingAddress");
-        settings.Columns.Add("BillingCity");
-        settings.Columns.Add("BillingState");
-        settings.Columns.Add("BillingCountry");
 
         settings.SettingsEditing.ShowModelErrorsForEditors = true;
     });
